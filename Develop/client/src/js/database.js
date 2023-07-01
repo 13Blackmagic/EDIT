@@ -33,6 +33,14 @@ const getDb = async () => {
   return content;
 };
 
+export const deleteDb = async () => console.error('deleteDb not implemented');
+const deleteDb = async () => {
+  const db = await openDB('jate', 1);
+  const tx = db.transaction('jate', 'readwrite');
+  const store = tx.objectStore('jate');
+  await store.clear();
+  await tx.done;
+};
 
 
 initdb();
