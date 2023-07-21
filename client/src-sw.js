@@ -7,6 +7,24 @@ const { precacheAndRoute } = require('workbox-precaching/precacheAndRoute');
 
 precacheAndRoute(self.__WB_MANIFEST);
 
+offlineFallback({
+  pageFallback: '/index.html',
+});
+
+registerRoute(
+  ({ request }) => request.destination === 'image',
+  new CacheFirst({
+    cacheName: 'image-cache',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+    ],
+  })
+);
 const pageCache = new CacheFirst({
   cacheName: 'page-cache',
   plugins: [
