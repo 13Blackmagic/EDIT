@@ -4,6 +4,20 @@ const { registerRoute } = require('workbox-routing');
 const { CacheableResponsePlugin } = require('workbox-cacheable-response');
 const { ExpirationPlugin } = require('workbox-expiration');
 const { precacheAndRoute } = require('workbox-precaching/precacheAndRoute');
+const {babelPlugin} = require('@babel/core');
+
+babelPlugin({
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          node: 'current',
+        },
+      },
+    ],
+  ],
+});
 
 precacheAndRoute(self.__WB_MANIFEST);
 
